@@ -1,0 +1,27 @@
+.diffilty_container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100vh;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.difficulty_btn {
+    width: 130px;
+    height: 40px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    border-radius: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.difficulty_btn.active {
+    border: 2px #fff solid;
+    background-color: rgba(0, 0, 0, 0.5);
+}

@@ -5,6 +5,8 @@
     border-radius: 5%;
     background-size: contain;
     box-sizing: border-box;
+    background-position: 50%;
+    background-repeat: no-repeat;
 }
 
 .ancient_card.active {

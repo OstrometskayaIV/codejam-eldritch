@@ -3,10 +3,9 @@ import ancients from '../Cards/Ancients';
 
 function AncientCard(props) {
     return (
-      <div className="ancient_card" style={{
+      <div className={"ancient_card " + (props.isActive ? 'active' : '')} style={{
         backgroundImage: `url(${props.backgroundImage})`
-      }}>
-        AC
+      }} onClick={props.onClick}>
       </div>
     );
   }

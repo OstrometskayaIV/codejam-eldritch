@@ -1,16 +1,20 @@
 import AncientCard from "../AncientCard";
 import './Cards.css';
-import ancients from './Ancients'
+import ancients from './Ancients';
 
-function Cards() {
+
+
+function Cards(props) {
+    const {activeCard, setActiveCard} = props;
     return (
       <div className="cards_container">
-        <AncientCard backgroundImage={ancients.azathoth}/>
-        <AncientCard backgroundImage={ancients.cthulhu}/>
-        <AncientCard backgroundImage={ancients.iogSothoth}/>
-        <AncientCard backgroundImage={ancients.shubNiggurath}/>
+        <AncientCard backgroundImage={ancients.azathoth} onClick={() => setActiveCard('azathoth')} isActive={activeCard == 'azathoth'}/>
+        <AncientCard backgroundImage={ancients.cthulhu} onClick={() => setActiveCard('cthulhu')} isActive={activeCard == 'cthulhu'}/>
+        <AncientCard backgroundImage={ancients.iogSothoth} onClick={() => setActiveCard('iogSothoth')} isActive={activeCard == 'iogSothoth'}/>
+        <AncientCard backgroundImage={ancients.shubNiggurath} onClick={() => setActiveCard('shubNiggurath')} isActive={activeCard == 'shubNiggurath'}/>
       </div>
     );
   }
   
   export default Cards;
+

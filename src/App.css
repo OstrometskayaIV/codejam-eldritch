@@ -5,8 +5,8 @@
   background-size: cover;
   display: flex;
   gap: 20px;
+  /* padding-right: 50px; */
   height: 100vh;
-  justify-content: space-between;
   width: 100vw;
   text-align: center;
 }

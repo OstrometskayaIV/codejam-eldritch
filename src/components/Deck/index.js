@@ -1,6 +1,9 @@
+import './Deck.css';
+
+
 function Deck() {
     return (
-      <div>
+      <div className="deck_container">
         Deck
       </div>
     );
