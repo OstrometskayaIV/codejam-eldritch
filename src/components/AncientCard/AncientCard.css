@@ -1,0 +1,12 @@
+.ancient_card {
+    height: 260px;
+    width: 200px;
+    cursor: pointer;
+    border-radius: 5%;
+    background-size: contain;
+    box-sizing: border-box;
+}
+
+.ancient_card.active {
+    border: 2px #fff solid;
+}
