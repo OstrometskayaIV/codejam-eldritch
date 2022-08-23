@@ -4,7 +4,7 @@ import './Deck.css';
 function Deck() {
     return (
       <div className="deck_container">
-        Deck
+        <div className="deck_btn">Замешать колоду</div>
       </div>
     );
   }

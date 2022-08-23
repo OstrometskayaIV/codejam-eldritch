@@ -6,3 +6,21 @@
     justify-content: center;
     min-width: 30%;
 }
+
+.deck_btn {
+    width: 150px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    border-radius: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.deck_btn.active {
+    border: 2px #fff solid;
+    background-color: rgba(0, 0, 0, 0.5);
+}
