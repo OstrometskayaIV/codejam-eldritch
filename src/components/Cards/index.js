@@ -5,7 +5,8 @@ import ancients from './Ancients';
 
 
 function Cards(props) {
-    const {activeCard, setActiveCard} = props;
+    const activeCard = props.activeCard;
+    const setActiveCard = props.setActiveCard;
     return (
       <div className="cards_container">
         <AncientCard backgroundImage={ancients.azathoth} onClick={() => setActiveCard('azathoth')} isActive={activeCard == 'azathoth'}/>

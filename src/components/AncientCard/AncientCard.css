@@ -11,4 +11,5 @@
 
 .ancient_card.active {
     border: 2px #fff solid;
+    box-shadow: 4px 5px 40px rgba(255, 255, 255, 0.8);
 }
