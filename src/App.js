@@ -8,6 +8,8 @@ import greenCardsAssets from './components/mythicCards/green';
 import brownCardsAssets from './components/mythicCards/brown';
 import blueCardsAssets from './components/mythicCards/blue';
 
+
+//рандом
 const shuffleArray = (array) =>{
   return array.sort(() => Math.random() - 0.5) 
 }
@@ -29,17 +31,60 @@ const getSemiDeck = (cardCount, cardsAssets) => {
     }, mostEasyCards);
   }
   return mostEasyCards;
+  
 }
 
+const getEasyCards = (cardCount, cardsAssets) => {
+  const shuffleCardsAssets = shuffleArray(cardsAssets);
+  let easyCards = shuffleCardsAssets.reduce((accumulator, currentValue) => {
+  if (currentValue.difficulty !== 'hard' && accumulator.length < cardCount) {
+    return accumulator.concat(currentValue);
+  }
+  return accumulator;
+  }, []);
+  return easyCards;
+}
 
+const getNormalCards = (cardCount, cardsAssets) => {
+  const shuffleCardsAssets = shuffleArray(cardsAssets);
+  let normalCards = shuffleCardsAssets.reduce((accumulator, currentValue) => {
+  return accumulator.concat(currentValue);
+  }, []);
+  return normalCards;
+}
 
+const getDifficultCards = (cardCount, cardsAssets) => {
+  const shuffleCardsAssets = shuffleArray(cardsAssets);
+  let difficultCards = shuffleCardsAssets.reduce((accumulator, currentValue) => {
+  if (currentValue.difficulty !== 'easy' && accumulator.length < cardCount) {
+    return accumulator.concat(currentValue);
+  }
+  return accumulator;
+  }, []);
+  return difficultCards;
+}
 
-const mostEasyLevel = (greenCount, brownCount, blueCount, ancientCardData) => {
-  let mostEasyGreenCards = getSemiDeck(greenCount, greenCardsAssets);
-  let mostEasyBrownCards = getSemiDeck(brownCount, brownCardsAssets);
-  let mostEasyBlueCards = getSemiDeck(blueCount, blueCardsAssets);
+const getMostDifficultCards = (cardCount, cardsAssets) => {
+  const shuffleCardsAssets = shuffleArray(cardsAssets);
+  let mostDifficultCards = shuffleCardsAssets.reduce((accumulator, currentValue) => {
+    if (currentValue.difficulty == 'hard' && accumulator.length < cardCount) {
+      return accumulator.concat(currentValue);
+    }
+    return accumulator;
+  }, []);
+  if (cardCount > mostDifficultCards.length) {
+    mostDifficultCards = shuffleCardsAssets.reduce((accumulator, currentValue) => {
+      if (currentValue.difficulty == 'normal' && accumulator.length < cardCount) {
+        return accumulator.concat(currentValue);
+      }
+      return accumulator;
+    }, mostDifficultCards);
+  }
+  return mostDifficultCards;
+  
+}
 
-
+const getFinalDecks = (ancientCardData, mostEasyGreenCards, mostEasyBrownCards, mostEasyBlueCards) => {
   let startIntervalBlue = 0;
   let startIntervalGreen = 0;
   let startIntervalBrown = 0;
@@ -73,15 +118,60 @@ const mostEasyLevel = (greenCount, brownCount, blueCount, ancientCardData) => {
   let mostEasyThirdStage = shuffleArray(mostEasyGreenCards.slice(startIntervalGreen, endIntervalGreen)
                                 .concat(mostEasyBrownCards.slice(startIntervalBrown, endIntervalBrown))
                                 .concat(mostEasyBlueCards.slice(startIntervalBlue, endIntervalBlue)));
-  //console.log(mostEasyGreenCards)
 
-  console.log(mostEasyFirstStage)
-  console.log(mostEasySecondStage)
-  console.log(mostEasyThirdStage)
-
-
-
+  return [mostEasyFirstStage, mostEasySecondStage, mostEasyThirdStage];
 }
+
+const mostEasyLevel = (greenCount, brownCount, blueCount, ancientCardData) => {
+  let mostEasyGreenCards = getSemiDeck(greenCount, greenCardsAssets);
+  let mostEasyBrownCards = getSemiDeck(brownCount, brownCardsAssets);
+  let mostEasyBlueCards = getSemiDeck(blueCount, blueCardsAssets);
+
+  let result = getFinalDecks(ancientCardData, mostEasyGreenCards, mostEasyBrownCards,mostEasyBlueCards);
+  console.log(result)
+  return result;
+}
+
+const easyLevel = (greenCount, brownCount, blueCount, ancientCardData) => {
+  let mostEasyGreenCards = getEasyCards(greenCount, greenCardsAssets);
+  let mostEasyBrownCards = getEasyCards(brownCount, brownCardsAssets);
+  let mostEasyBlueCards = getEasyCards(blueCount, blueCardsAssets);
+
+  let result = getFinalDecks(ancientCardData, mostEasyGreenCards, mostEasyBrownCards,mostEasyBlueCards);
+  console.log(result)
+  return result;
+}
+
+const normalLevel = (greenCount, brownCount, blueCount, ancientCardData) => {
+  let mostEasyGreenCards = getNormalCards(greenCount, greenCardsAssets);
+  let mostEasyBrownCards = getNormalCards(brownCount, brownCardsAssets);
+  let mostEasyBlueCards = getNormalCards(blueCount, blueCardsAssets);
+
+  let result = getFinalDecks(ancientCardData, mostEasyGreenCards, mostEasyBrownCards,mostEasyBlueCards);
+  console.log(result)
+  return result;
+}
+
+const difficultLevel = (greenCount, brownCount, blueCount, ancientCardData) => {
+  let mostEasyGreenCards = getDifficultCards(greenCount, greenCardsAssets);
+  let mostEasyBrownCards = getDifficultCards(brownCount, brownCardsAssets);
+  let mostEasyBlueCards = getDifficultCards(blueCount, blueCardsAssets);
+
+  let result = getFinalDecks(ancientCardData, mostEasyGreenCards, mostEasyBrownCards,mostEasyBlueCards);
+  console.log(result)
+  return result;
+}
+
+const mostDifficultLevel = (greenCount, brownCount, blueCount, ancientCardData) => {
+  let mostEasyGreenCards = getMostDifficultCards(greenCount, greenCardsAssets);
+  let mostEasyBrownCards = getMostDifficultCards(brownCount, brownCardsAssets);
+  let mostEasyBlueCards = getMostDifficultCards(blueCount, blueCardsAssets);
+
+  let result = getFinalDecks(ancientCardData, mostEasyGreenCards, mostEasyBrownCards,mostEasyBlueCards);
+  console.log(result)
+  return result;
+}
+
 
 function App() {
   const [activeCard, setActiveCard] = useState(null);
@@ -89,14 +179,26 @@ function App() {
   const shuffleCards = useCallback(() => {
     let ancientCardData = ancientsData.find(name => name.id == activeCard);
     let firstStage = ancientCardData.firstStage;
-    console.log(firstStage)
     let secondStage = ancientCardData.secondStage;
     let thirdStage = ancientCardData.thirdStage;
     let greenCount = firstStage.greenCards + secondStage.greenCards + thirdStage.greenCards;
     let brownCount = firstStage.brownCards + secondStage.brownCards + thirdStage.brownCards;
     let blueCount = firstStage.blueCards + secondStage.blueCards + thirdStage.blueCards;
-    mostEasyLevel(greenCount, brownCount, blueCount, ancientCardData);
-    
+    if (difficulty == 1) {
+      mostEasyLevel(greenCount, brownCount, blueCount, ancientCardData);
+    }
+    if (difficulty == 2) {
+      easyLevel(greenCount, brownCount, blueCount, ancientCardData);
+    }
+    if (difficulty == 3) {
+      normalLevel(greenCount, brownCount, blueCount, ancientCardData);
+    }
+    if (difficulty == 4) {
+      difficultLevel(greenCount, brownCount, blueCount, ancientCardData);
+    }
+    if (difficulty == 5) {
+      mostDifficultLevel(greenCount, brownCount, blueCount, ancientCardData);
+    }
 
   }, [activeCard, difficulty]);
   return (

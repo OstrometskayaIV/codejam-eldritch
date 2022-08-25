@@ -3,6 +3,8 @@
     flex-direction: column;
     flex-wrap: wrap;
     gap: 15px;
-    min-width: 35%;
+    min-width: 45%;
+    max-width: 45%;
     padding: 15px;
+    justify-content: center;
 }
