@@ -2,7 +2,7 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     justify-content: center;
     min-width: 30%;
 }
@@ -20,7 +20,79 @@
     cursor: pointer;
 }
 
-.deck_btn.active {
+.stage_container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-height: 25%;
+}
+
+.deck_stage {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+.text_stage {
+    color: #fff;
+    text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.5);
+}
+
+.dots_container {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.dot {
+    align-items: center;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    width: 30px;
+    cursor: pointer;
+    box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.8);
+}
+
+.dot.green {
+    background-color:rgba(6, 244, 54, 0.952);
+    color: #fff;
+}
+
+.dot.brown {
+    background-color: rgb(255, 164, 17);
+    color: #fff;
+}
+
+.dot.blue {
+    background-color: rgb(0, 106, 255);
+    color: #fff;
+}
+
+.deck_shirt {
+    background-size: cover;
+    height: 230px;
+    width: 170px;
+    background-image: url(../../../public/assets/mythicCardBackground.png);
+    cursor: pointer;
+    border-radius: 5%;
+    box-sizing: border-box;
+    background-position: 50%;
     border: 2px #fff solid;
-    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 4px 5px 40px rgba(255, 255, 255, 0.8);
+}
+
+.last_card {
+    background-size: cover;
+    height: 230px;
+    width: 170px;
+    border-radius: 5%;
+    box-sizing: border-box;
+    background-position: 50%;
+    box-shadow: 4px 5px 40px rgba(255, 255, 255, 0.8);
 }

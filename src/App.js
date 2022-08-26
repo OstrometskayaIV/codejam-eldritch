@@ -30,7 +30,7 @@ const getSemiDeck = (cardCount, cardsAssets) => {
       return accumulator;
     }, mostEasyCards);
   }
-  return mostEasyCards;
+  return shuffleArray(mostEasyCards);
   
 }
 
@@ -80,7 +80,7 @@ const getMostDifficultCards = (cardCount, cardsAssets) => {
       return accumulator;
     }, mostDifficultCards);
   }
-  return mostDifficultCards;
+  return shuffleArray(mostDifficultCards);
   
 }
 
