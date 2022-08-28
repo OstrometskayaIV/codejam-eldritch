@@ -176,6 +176,7 @@ const mostDifficultLevel = (greenCount, brownCount, blueCount, ancientCardData) 
 function App() {
   const [activeCard, setActiveCard] = useState(null);
   const [difficulty, setDifficulty] = useState(null);
+  const [decks, setDecks] = useState(null);
   const shuffleCards = useCallback(() => {
     let ancientCardData = ancientsData.find(name => name.id == activeCard);
     let firstStage = ancientCardData.firstStage;
@@ -184,28 +185,30 @@ function App() {
     let greenCount = firstStage.greenCards + secondStage.greenCards + thirdStage.greenCards;
     let brownCount = firstStage.brownCards + secondStage.brownCards + thirdStage.brownCards;
     let blueCount = firstStage.blueCards + secondStage.blueCards + thirdStage.blueCards;
+    let finalDeck = [];
     if (difficulty == 1) {
-      mostEasyLevel(greenCount, brownCount, blueCount, ancientCardData);
+      finalDeck = mostEasyLevel(greenCount, brownCount, blueCount, ancientCardData);
     }
     if (difficulty == 2) {
-      easyLevel(greenCount, brownCount, blueCount, ancientCardData);
+      finalDeck = easyLevel(greenCount, brownCount, blueCount, ancientCardData);
     }
     if (difficulty == 3) {
-      normalLevel(greenCount, brownCount, blueCount, ancientCardData);
+      finalDeck = normalLevel(greenCount, brownCount, blueCount, ancientCardData);
     }
     if (difficulty == 4) {
-      difficultLevel(greenCount, brownCount, blueCount, ancientCardData);
+      finalDeck = difficultLevel(greenCount, brownCount, blueCount, ancientCardData);
     }
     if (difficulty == 5) {
-      mostDifficultLevel(greenCount, brownCount, blueCount, ancientCardData);
+      finalDeck = mostDifficultLevel(greenCount, brownCount, blueCount, ancientCardData);
     }
+    setDecks(finalDeck);
 
   }, [activeCard, difficulty]);
   return (
     <div className="App">
       <Cards activeCard = {activeCard} setActiveCard = {setActiveCard} />
       {activeCard && <Difficulty difficulty = {difficulty} setDifficulty = {setDifficulty} />}
-      {activeCard && difficulty && <Deck shuffleCards = {shuffleCards} />}
+      {activeCard && difficulty && <Deck shuffleCards = {shuffleCards} decks = {decks}/>}
     </div>
   );
 }
