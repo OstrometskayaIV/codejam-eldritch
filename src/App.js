@@ -17,14 +17,14 @@ const shuffleArray = (array) =>{
 const getSemiDeck = (cardCount, cardsAssets) => {
   const shuffleCardsAssets = shuffleArray(cardsAssets);
   let mostEasyCards = shuffleCardsAssets.reduce((accumulator, currentValue) => {
-    if (currentValue.difficulty == 'easy' && accumulator.length < cardCount) {
+    if (currentValue.difficulty === 'easy' && accumulator.length < cardCount) {
       return accumulator.concat(currentValue);
     }
     return accumulator;
   }, []);
   if (cardCount > mostEasyCards.length) {
     mostEasyCards = shuffleCardsAssets.reduce((accumulator, currentValue) => {
-      if (currentValue.difficulty == 'normal' && accumulator.length < cardCount) {
+      if (currentValue.difficulty === 'normal' && accumulator.length < cardCount) {
         return accumulator.concat(currentValue);
       }
       return accumulator;
@@ -67,14 +67,14 @@ const getDifficultCards = (cardCount, cardsAssets) => {
 const getMostDifficultCards = (cardCount, cardsAssets) => {
   const shuffleCardsAssets = shuffleArray(cardsAssets);
   let mostDifficultCards = shuffleCardsAssets.reduce((accumulator, currentValue) => {
-    if (currentValue.difficulty == 'hard' && accumulator.length < cardCount) {
+    if (currentValue.difficulty === 'hard' && accumulator.length < cardCount) {
       return accumulator.concat(currentValue);
     }
     return accumulator;
   }, []);
   if (cardCount > mostDifficultCards.length) {
     mostDifficultCards = shuffleCardsAssets.reduce((accumulator, currentValue) => {
-      if (currentValue.difficulty == 'normal' && accumulator.length < cardCount) {
+      if (currentValue.difficulty === 'normal' && accumulator.length < cardCount) {
         return accumulator.concat(currentValue);
       }
       return accumulator;
@@ -179,7 +179,7 @@ function App() {
   const [isEndDeck, setIsEndDeck] = useState(false);
 
   const shuffleCards = useCallback(() => {
-    let ancientCardData = ancientsData.find(name => name.id == activeCard);
+    let ancientCardData = ancientsData.find(name => name.id === activeCard);
     let firstStage = ancientCardData[0];
     let secondStage = ancientCardData[1];
     let thirdStage = ancientCardData[2];
@@ -189,19 +189,19 @@ function App() {
     let finalDeck = [];
     setAncientCardData(ancientCardData);
 
-    if (difficulty == 1) {
+    if (difficulty === 1) {
       finalDeck = mostEasyLevel(greenCount, brownCount, blueCount, ancientCardData);
     }
-    if (difficulty == 2) {
+    if (difficulty === 2) {
       finalDeck = easyLevel(greenCount, brownCount, blueCount, ancientCardData);
     }
-    if (difficulty == 3) {
+    if (difficulty === 3) {
       finalDeck = normalLevel(greenCount, brownCount, blueCount, ancientCardData);
     }
-    if (difficulty == 4) {
+    if (difficulty === 4) {
       finalDeck = difficultLevel(greenCount, brownCount, blueCount, ancientCardData);
     }
-    if (difficulty == 5) {
+    if (difficulty === 5) {
       finalDeck = mostDifficultLevel(greenCount, brownCount, blueCount, ancientCardData);
     }
     setDecks(finalDeck);
@@ -215,13 +215,13 @@ function App() {
     setCurrentCardIndex(null);
     setCurrentCard(null);
     setIsEndDeck(false);
-  },[decks, currentCard, currentCardIndex, currentStageIndex, ancientCardData, isEndDeck]);
+  },[]);
 
   const getNextCard = useCallback(() => {
     if (currentCard === null) {
       setCurrentCardIndex(0);
       setCurrentStageIndex(0);
-      if (decks[0][0].color == 'green') {
+      if (decks[0][0].color === 'green') {
         setAncientCardData({
           ...ancientCardData,
           ...{
@@ -234,7 +234,7 @@ function App() {
           }
         });
       }
-      if (decks[0][0].color == 'brown') {
+      if (decks[0][0].color === 'brown') {
         setAncientCardData({
           ...ancientCardData,
           ...{
@@ -247,7 +247,7 @@ function App() {
           }
         });
       }
-      if (decks[0][0].color == 'blue') {
+      if (decks[0][0].color === 'blue') {
         setAncientCardData({
           ...ancientCardData,
           ...{
@@ -265,7 +265,7 @@ function App() {
     else if (decks[currentStageIndex] && decks[currentStageIndex][currentCardIndex + 1]) {
       setCurrentCard(decks[currentStageIndex][currentCardIndex + 1])
       setCurrentCardIndex(currentCardIndex + 1);
-      if (decks[currentStageIndex][currentCardIndex + 1].color == 'green') {
+      if (decks[currentStageIndex][currentCardIndex + 1].color === 'green') {
         setAncientCardData({
           ...ancientCardData,
           ...{
@@ -278,7 +278,7 @@ function App() {
           }
         });
       }
-      else if (decks[currentStageIndex][currentCardIndex + 1].color == 'brown') {
+      else if (decks[currentStageIndex][currentCardIndex + 1].color === 'brown') {
         setAncientCardData({
           ...ancientCardData,
           ...{
@@ -291,7 +291,7 @@ function App() {
           }
         });
       }
-      else if (decks[currentStageIndex][currentCardIndex + 1].color == 'blue') {
+      else if (decks[currentStageIndex][currentCardIndex + 1].color === 'blue') {
         setAncientCardData({
           ...ancientCardData,
           ...{
@@ -314,7 +314,7 @@ function App() {
       setCurrentCard(decks[currentStageIndex+1][0])
       setCurrentStageIndex(currentStageIndex + 1);
       setCurrentCardIndex(0);
-      if (decks[currentStageIndex+1][0].color == 'green') {
+      if (decks[currentStageIndex+1][0].color === 'green') {
         setAncientCardData({
           ...ancientCardData,
           ...{
@@ -328,7 +328,7 @@ function App() {
         });
         //ancientCardData[currentStageIndex+1].greenCards =  ancientCardData[currentStageIndex+1].greenCards - 1;
       }
-      else if (decks[currentStageIndex+1][0].color == 'brown') {
+      else if (decks[currentStageIndex+1][0].color === 'brown') {
         setAncientCardData({
           ...ancientCardData,
           ...{
@@ -341,7 +341,7 @@ function App() {
           }
         });
       }
-      else if (decks[currentStageIndex+1][0].color == 'blue') {
+      else if (decks[currentStageIndex+1][0].color === 'blue') {
         setAncientCardData({
           ...ancientCardData,
           ...{
@@ -360,7 +360,7 @@ function App() {
       setIsEndDeck(true);
     }*/
     
-  }, [decks, currentCard, currentCardIndex, currentStageIndex, ancientCardData, isEndDeck]);
+  }, [decks, currentCard, currentCardIndex, currentStageIndex, ancientCardData]);
 
   return (
     <div className="App">

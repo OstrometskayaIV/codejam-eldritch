@@ -1,5 +1,4 @@
 import './AncientCard.css';
-import ancients from '../Cards/Ancients';
 
 function AncientCard(props) {
     return (
