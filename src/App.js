@@ -128,7 +128,6 @@ const mostEasyLevel = (greenCount, brownCount, blueCount, ancientCardData) => {
   let mostEasyBlueCards = getSemiDeck(blueCount, blueCardsAssets);
 
   let result = getFinalDecks(ancientCardData, mostEasyGreenCards, mostEasyBrownCards,mostEasyBlueCards);
-  console.log(result)
   return result;
 }
 
@@ -138,7 +137,6 @@ const easyLevel = (greenCount, brownCount, blueCount, ancientCardData) => {
   let mostEasyBlueCards = getEasyCards(blueCount, blueCardsAssets);
 
   let result = getFinalDecks(ancientCardData, mostEasyGreenCards, mostEasyBrownCards,mostEasyBlueCards);
-  console.log(result)
   return result;
 }
 
@@ -148,7 +146,6 @@ const normalLevel = (greenCount, brownCount, blueCount, ancientCardData) => {
   let mostEasyBlueCards = getNormalCards(blueCount, blueCardsAssets);
 
   let result = getFinalDecks(ancientCardData, mostEasyGreenCards, mostEasyBrownCards,mostEasyBlueCards);
-  console.log(result)
   return result;
 }
 
@@ -158,7 +155,6 @@ const difficultLevel = (greenCount, brownCount, blueCount, ancientCardData) => {
   let mostEasyBlueCards = getDifficultCards(blueCount, blueCardsAssets);
 
   let result = getFinalDecks(ancientCardData, mostEasyGreenCards, mostEasyBrownCards,mostEasyBlueCards);
-  console.log(result)
   return result;
 }
 
@@ -168,7 +164,6 @@ const mostDifficultLevel = (greenCount, brownCount, blueCount, ancientCardData) 
   let mostEasyBlueCards = getMostDifficultCards(blueCount, blueCardsAssets);
 
   let result = getFinalDecks(ancientCardData, mostEasyGreenCards, mostEasyBrownCards,mostEasyBlueCards);
-  console.log(result)
   return result;
 }
 
@@ -181,6 +176,7 @@ function App() {
   const [currentStageIndex, setCurrentStageIndex] = useState(null);
   const [currentCardIndex, setCurrentCardIndex] = useState(null);
   const [currentCard, setCurrentCard] = useState(null);
+  const [isEndDeck, setIsEndDeck] = useState(false);
 
   const shuffleCards = useCallback(() => {
     let ancientCardData = ancientsData.find(name => name.id == activeCard);
@@ -212,32 +208,106 @@ function App() {
 
   }, [activeCard, difficulty]);
 
+  const resetState = useCallback(() => {
+    setDecks(null);
+    setAncientCardData(null);
+    setCurrentStageIndex(null);
+    setCurrentCardIndex(null);
+    setCurrentCard(null);
+    setIsEndDeck(false);
+  },[decks, currentCard, currentCardIndex, currentStageIndex, ancientCardData, isEndDeck]);
+
   const getNextCard = useCallback(() => {
     if (currentCard === null) {
       setCurrentCardIndex(0);
       setCurrentStageIndex(0);
       if (decks[0][0].color == 'green') {
-        ancientCardData[0].greenCards =  ancientCardData[0].greenCards - 1;
-        
+        setAncientCardData({
+          ...ancientCardData,
+          ...{
+            0: {
+              ...ancientCardData[0],
+              ...{
+                greenCards: ancientCardData[0].greenCards - 1
+              }
+            }
+          }
+        });
       }
       if (decks[0][0].color == 'brown') {
-        ancientCardData[0].brownCards =  ancientCardData[0].brownCards - 1;
+        setAncientCardData({
+          ...ancientCardData,
+          ...{
+            0: {
+              ...ancientCardData[0],
+              ...{
+                brownCards: ancientCardData[0].brownCards - 1
+              }
+            }
+          }
+        });
       }
       if (decks[0][0].color == 'blue') {
-        ancientCardData[0].blueCards =  ancientCardData[0].blueCards - 1;
+        setAncientCardData({
+          ...ancientCardData,
+          ...{
+            0: {
+              ...ancientCardData[0],
+              ...{
+                blueCards: ancientCardData[0].blueCards - 1
+              }
+            }
+          }
+        });
       }
       setCurrentCard(decks[0][0]);
-    } else if (decks[currentStageIndex] && decks[currentStageIndex][currentCardIndex + 1]) {
+    } 
+    else if (decks[currentStageIndex] && decks[currentStageIndex][currentCardIndex + 1]) {
       setCurrentCard(decks[currentStageIndex][currentCardIndex + 1])
       setCurrentCardIndex(currentCardIndex + 1);
       if (decks[currentStageIndex][currentCardIndex + 1].color == 'green') {
-        ancientCardData[currentStageIndex].greenCards =  ancientCardData[currentStageIndex].greenCards - 1;
+        setAncientCardData({
+          ...ancientCardData,
+          ...{
+            [currentStageIndex]: {
+              ...ancientCardData[currentStageIndex],
+              ...{
+                greenCards: ancientCardData[currentStageIndex].greenCards - 1
+              }
+            }
+          }
+        });
       }
       else if (decks[currentStageIndex][currentCardIndex + 1].color == 'brown') {
-        ancientCardData[currentStageIndex].brownCards =  ancientCardData[currentStageIndex].brownCards - 1;
+        setAncientCardData({
+          ...ancientCardData,
+          ...{
+            [currentStageIndex]: {
+              ...ancientCardData[currentStageIndex],
+              ...{
+                brownCards: ancientCardData[currentStageIndex].brownCards - 1
+              }
+            }
+          }
+        });
       }
       else if (decks[currentStageIndex][currentCardIndex + 1].color == 'blue') {
-        ancientCardData[currentStageIndex].blueCards =  ancientCardData[currentStageIndex].blueCards - 1;
+        setAncientCardData({
+          ...ancientCardData,
+          ...{
+            [currentStageIndex]: {
+              ...ancientCardData[currentStageIndex],
+              ...{
+                blueCards: ancientCardData[currentStageIndex].blueCards - 1
+              }
+            }
+          }
+        });
+      }
+      console.log('Check on the last item');
+      console.log(!decks[currentStageIndex][currentCardIndex + 1]);
+      if(!decks[currentStageIndex][currentCardIndex + 2] && !decks[currentStageIndex+1]){
+        setIsEndDeck(true);
       }
     }
     else if(decks[currentStageIndex+1] && decks[currentStageIndex+1][0]){
@@ -245,23 +315,64 @@ function App() {
       setCurrentStageIndex(currentStageIndex + 1);
       setCurrentCardIndex(0);
       if (decks[currentStageIndex+1][0].color == 'green') {
-        ancientCardData[currentStageIndex+1].greenCards =  ancientCardData[currentStageIndex+1].greenCards - 1;
+        setAncientCardData({
+          ...ancientCardData,
+          ...{
+            [currentStageIndex+1]: {
+              ...ancientCardData[currentStageIndex+1],
+              ...{
+                greenCards: ancientCardData[currentStageIndex+1].greenCards - 1
+              }
+            }
+          }
+        });
+        //ancientCardData[currentStageIndex+1].greenCards =  ancientCardData[currentStageIndex+1].greenCards - 1;
       }
       else if (decks[currentStageIndex+1][0].color == 'brown') {
-        ancientCardData[currentStageIndex+1].brownCards =  ancientCardData[currentStageIndex+1].brownCards - 1;
+        setAncientCardData({
+          ...ancientCardData,
+          ...{
+            [currentStageIndex+1]: {
+              ...ancientCardData[currentStageIndex+1],
+              ...{
+                brownCards: ancientCardData[currentStageIndex+1].brownCards - 1
+              }
+            }
+          }
+        });
       }
       else if (decks[currentStageIndex+1][0].color == 'blue') {
+        setAncientCardData({
+          ...ancientCardData,
+          ...{
+            [currentStageIndex+1]: {
+              ...ancientCardData[currentStageIndex+1],
+              ...{
+                blueCards: ancientCardData[currentStageIndex+1].blueCards - 1
+              }
+            }
+          }
+        });
         ancientCardData[currentStageIndex+1].blueCards =  ancientCardData[currentStageIndex+1].blueCards - 1;
       }
     }
+    /*else {
+      setIsEndDeck(true);
+    }*/
     
-  }, [decks, currentCard, currentCardIndex, currentStageIndex, ancientCardData]);
+  }, [decks, currentCard, currentCardIndex, currentStageIndex, ancientCardData, isEndDeck]);
 
   return (
     <div className="App">
-      <Cards activeCard = {activeCard} setActiveCard = {setActiveCard} />
-      {activeCard && <Difficulty difficulty = {difficulty} setDifficulty = {setDifficulty} />}
-      {activeCard && difficulty && <Deck shuffleCards = {shuffleCards} decks = {decks} ancientCardData = {ancientCardData} getNextCard = {getNextCard} currentCard = {currentCard}/>}
+      <Cards activeCard = {activeCard} setActiveCard = {(value)=> {
+        setActiveCard(value);
+        resetState();
+      }} />
+      {activeCard && <Difficulty difficulty = {difficulty} setDifficulty = {(value)=>{ 
+        setDifficulty(value);
+        resetState();
+      }} />}
+      {activeCard && difficulty && <Deck shuffleCards = {shuffleCards} decks = {decks} ancientCardData = {ancientCardData} getNextCard = {getNextCard} currentCard = {currentCard} isEndDeck = {isEndDeck} setIsEndDeck = {setIsEndDeck }/>}
     </div>
   );
 }

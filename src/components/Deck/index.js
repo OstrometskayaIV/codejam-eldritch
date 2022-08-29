@@ -7,7 +7,7 @@ const decks = props.decks;
 const ancientCardData = props.ancientCardData;
 const getNextCard = props.getNextCard;
 const currentCard = props.currentCard;
-console.log(currentCard)
+const isEndDeck = props.isEndDeck;
     return (
       <div className='deck_container'>
         {
@@ -38,7 +38,10 @@ console.log(currentCard)
                 <div className='dot blue'>{ancientCardData[2].blueCards}</div>
               </div>
             </div>
-          </div><div className='deck_shirt' onClick={() => getNextCard()}></div>
+          </div>
+          { isEndDeck === false ? 
+            <div className='deck_shirt' onClick={() => getNextCard()}></div> : <></>
+            }
           </>
         }
         {
